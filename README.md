@@ -7,3 +7,4 @@ You will need to get an API key, which must be set in an environment variable CH
 	"Basic {YOUR API KEY FROM COMPANIES HOUSE}"
 	Note. you dont include the '{}' characters above, but do include the quotes. 
 
+Enjoy!
