@@ -30,7 +30,7 @@
     @html.block("custom-scripts", function (model) {
     <script src="/js/index_cvm.js"></script>
     <script>
-        cvm.index.CH_BASIC_AUTH = "@model.BasicAuthHeader";
+        cvm.index.init("@model.BasicAuthHeader");
         ko.applyBindings(cvm.index.companies);
     </script>  
     

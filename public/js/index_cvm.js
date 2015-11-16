@@ -1,11 +1,15 @@
 
  var cvm = function () {
+	 
+	 init = function(auth_header) {
+		 CH_BASIC_AUTH = auth_header;
+	 }
 
 	 self = this,
         
 	model = ko.observableArray([]),
 	
-	authHeader = '',
+	CH_BASIC_AUTH = '',
 	
 	statusVal = ko.observable(''),
 		
@@ -13,15 +17,14 @@
 		
 		var searchText = $('#')
 		
-		$.ajax
-		({
+		var ajaxRequest = {
 			type: "GET",
 			url: "https://api.companieshouse.gov.uk/search/companies?q=silvertouch%20technology",
 			crossDomain: true,
 			dataType: 'jsonp',
 			async: true,
 			headers: {
-			"Authorization": authHeader
+			"Authorization": CH_BASIC_AUTH
 			},
 			error: function (data) {
 				// Push the new data into the model so the bindings update.
@@ -33,7 +36,9 @@
 				bindResults(data);
 				statusVal('');
 			}
-		});
+		};
+		
+		$.ajax(ajaxRequest);
 	},
 
 	seedData = function () {
@@ -193,7 +198,7 @@
 
 	return {
 			index: {
-				CH_BASIC_AUTH: authHeader,
+				init: init,
 				companies: model,
 				onClickBind: onClickBind,
 				status: statusVal,
