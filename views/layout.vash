@@ -15,7 +15,7 @@
         </button>
         <div id="logo">
           <a href='/'>
-            <h4>The Board</h4>
+            <h4>UK Company Finder</h4>
           </a>
         </div>
       </div>
@@ -37,7 +37,7 @@
   </section>
   <hr />
   <footer class="container">
-    <p>The Board</p>
+    <p>UK Company Finder</p>
   </footer>
   <script src="/lib/jquery/jquery.min.js"></script>
   <script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
