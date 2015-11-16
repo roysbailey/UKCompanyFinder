@@ -32,8 +32,6 @@
     <script>
         cvm.index.CH_BASIC_AUTH = "@model.BasicAuthHeader";
         ko.applyBindings(cvm.index.companies);
-
-        // export CH_BASIC_AUTH="Basic OTBtS2xPNFBRbWlUR2ExdEp6RzBEcFoxNGw2NS1nZDdIU2NjRk93TTo="
     </script>  
     
     })    
