@@ -5,6 +5,8 @@
         
 	model = ko.observableArray([]),
 	
+	authHeader = '',
+	
 	statusVal = ko.observable(''),
 		
 	onClickBind = function () {
@@ -19,7 +21,7 @@
 			dataType: 'jsonp',
 			async: true,
 			headers: {
-			"Authorization": "@model.BasicAuthHeader"
+			"Authorization": authHeader
 			},
 			error: function (data) {
 				// Push the new data into the model so the bindings update.
@@ -191,7 +193,7 @@
 
 	return {
 			index: {
-				CH_BASIC_AUTH: '',
+				CH_BASIC_AUTH: authHeader,
 				companies: model,
 				onClickBind: onClickBind,
 				status: statusVal,
