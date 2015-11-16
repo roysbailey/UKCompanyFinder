@@ -1,0 +1,18 @@
+{
+  "name": "CompanySearchSample",
+  "version": "0.1.0",
+  "description": "Search UK Companies.",
+  "main": "server.js",
+  "author": {
+    "name": "Roy Bailey",
+    "email": "roysbailey@passport.com"
+  },
+  "dependencies": {
+    "express": "~3.4.8",
+    "vash": "~0.7.7"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-nodemon": "~0.2.0"
+  }
+}
