@@ -2,10 +2,6 @@
 
   @html.block("body", function (model) {
 
-    @if (model.error) {
-      <p class="text-error">Error occurred: @model.error</p>
-    }
-
       <form class="form-inline">
         <div class="form-group">
           <label for="comp-name">Company Name</label>
