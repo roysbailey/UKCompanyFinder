@@ -1,34 +1,27 @@
 
- var cvm = function () {
-	 
-	 init = function(auth_header) {
-		 CH_BASIC_AUTH = auth_header;
-	 }
 
-	 self = this,
-        
-	model = ko.observableArray([]),
+// Self executing anonymous function which is used to return the client view model for the search page (this is the stuff that knockout uses in the html page).  See the "return" statement at the end for details of what actually gets returned.
+ var cvm = function () {
+
+	// Used in the view model to bind json company search result to the UI 
+	var companiesObservable = ko.observableArray([]);
 	
-	CH_BASIC_AUTH = '',
-	
-	statusVal = ko.observable(''),
+	// Used in the VM to show the status (if working off line with sample seed data)
+	var statusVal = ko.observable('');
 		
-	onClickBind = function () {
+	// Handler for the on-click event of the search button.  Calls the back end service and updates the model
+	var onClickBind = function () {
 		
-		var searchText = $('#')
-		
+		var searchText = $('#comp-name').val();
 		var ajaxRequest = {
 			type: "GET",
-			url: "https://api.companieshouse.gov.uk/search/companies?q=silvertouch%20technology",
-			crossDomain: true,
-			dataType: 'jsonp',
+			url: "/api/compsearch?q=" + searchText,
+			crossDomain: false,
+			dataType: 'json',
 			async: true,
-			headers: {
-			"Authorization": CH_BASIC_AUTH
-			},
 			error: function (data) {
 				// Push the new data into the model so the bindings update.
-				bindResults(seedData().items);
+				bindResults(seedData());
 				statusVal('Working with seed data');
 			},
 			success: function (data) {
@@ -39,9 +32,20 @@
 		};
 		
 		$.ajax(ajaxRequest);
-	},
+	};
 
-	seedData = function () {
+	// Called with the new company data following a search to ensure that the UI is updated. 
+	var bindResults = function (data) {
+		// Given the raw resutls from the REST API, create a view companiesObservable for each company so we can bind to the UI.
+		var companyVMs = [];
+		$.each(data.items, function(idx, item) {
+			var companyVM = new CompanyViewModel(item);
+			companyVMs.push(companyVM);
+		});
+		companiesObservable(companyVMs);
+	};
+
+	var seedData = function () {
 		var data = {
 		"items": [
 			{
@@ -190,16 +194,13 @@
 		};
 
 		return data;
-	},
-	
-	bindResults = function (data) {
-		model(data);
 	};
 
+
+	// Revealing module pattern, used to return the public interface of this module back to the "includer".  Allows us to hide "private" methods.
 	return {
 			index: {
-				init: init,
-				companies: model,
+				companies: companiesObservable,
 				onClickBind: onClickBind,
 				status: statusVal,
 				hasStatus: ko.computed(function(){
@@ -208,9 +209,27 @@
 			}
 		};
 	
-} ();
+} ();	// self executing anonymous function (revealing module pattern)
 
 
+// Function creating a knockout viewmodel to represent a single company returned from the companies house API.
+function CompanyViewModel(company) {
+    this.title = ko.observable(company.title);
+	this.status = ko.observable(company.company_status);
+    this.company = company;
+
+	this.inactive = ko.computed(function() {
+		var inactive = (this.company.company_status !== 'active');
+		return inactive; 
+    }, this);
+	
+	this.displaySummary = ko.computed(function() {
+        return this.company.title 
+				+ " (" + this.company.description + " - Postal Code: " + this.company.address.postal_code + ")";
+    }, this);
+}
+
+// Called when jquery has loaded to wireup the click handler to our search button.
 $(function() {
 	$( "#search" ).click(function() {
 		cvm.index.onClickBind();

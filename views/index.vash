@@ -1,4 +1,5 @@
 ﻿@html.extend('layout', function(model) {
+
   @html.block("body", function (model) {
 
     @if (model.error) {
@@ -16,7 +17,7 @@
 
       <div class="row">
         <div class="list-group col-lg-6" data-bind="foreach: cvm.index.companies">
-            <a href="#" class="list-group-item list-group-item-info" data-bind="text: title"></a>
+            <a href="#" class="list-group-item list-group-item-info" data-bind="text: displaySummary"></a><span data-bind="visible: inactive"><span class="text-error" data-bind="text: status"></span></span>
         </div>
       </div>
       
@@ -25,14 +26,14 @@
           <p data-bind="text: cvm.index.status"></p>
         </blockquote>
         </div>
-
     })
+    
     @html.block("custom-scripts", function (model) {
     <script src="/js/index_cvm.js"></script>
     <script>
-        cvm.index.init("@model.BasicAuthHeader");
+        // Note. cvm.index.companies will be auto populated by including script "/js/index_cvm.js" above. 
         ko.applyBindings(cvm.index.companies);
     </script>  
-    
-    })    
     })
+        
+})
