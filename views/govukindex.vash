@@ -1,0 +1,63 @@
+@html.extend('govuklayout', function(model) {
+
+  @html.block("body", function (model) {
+
+  <main id="content" role="main">
+
+  <div class="phase-banner">
+    <p>
+      <strong class="phase-tag">ALPHA</strong>
+      <span>Persil is a new service – your <a href="https://designpatterns.hackpad.com/GOV.UK-elements-feedback-sKrDyQxcfA2">feedback</a> will help us to improve it.</span>
+    </p>
+  </div>
+
+  <h1 class="heading-xlarge">
+    <span class="heading-secondary">GOV.UK Persil Service (whiter than white)</span>
+    UK Company Search
+  </h1>
+  
+  <p class="lede text">
+    Simple UK Company search.
+  </p>
+  
+      <form>
+        <label class="form-label" for="comp-name">Company Name</label>
+        <input class="form-control" id="comp-name" placeholder="Company Name" type="text">
+        <input class="button" id="search" type="submit" value="Search">
+        <p class="form-hint">Enter all, or part of a company name.</p>
+       </form>
+
+      <table data-bind="visible: cvm.index.hasResults">
+        <thead>
+          <tr>
+            <th colspan="4">Results</th>
+          </tr>
+        </thead>
+        <tbody data-bind="foreach: cvm.index.companies">
+          <tr>
+            <td data-bind="text: company.title"></td>
+            <td data-bind="text: company.company_number"></td>
+            <td data-bind="text: displaySummary"></td>
+            <td><div data-bind="visible: inactive"><div class="swatch-error" style="color: #fff; text-align: center;" data-bind="text: status"></div></div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row" data-bind="visible: cvm.index.hasStatus">
+        <blockquote>
+          <p data-bind="text: cvm.index.status"></p>
+        </blockquote>
+      </div>
+      
+   </main>
+})
+    
+    @html.block("custom-scripts", function (model) {
+    <script src="/js/index_cvm.js"></script>
+    <script>
+        // Note. cvm.index.companies will be auto populated by including script "/js/index_cvm.js" above. 
+        ko.applyBindings(cvm.index.companies);
+    </script>  
+    })
+
+})

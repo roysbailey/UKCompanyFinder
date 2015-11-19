@@ -3,7 +3,7 @@
   homeController.init = function (app) {
 
     app.get("/", function (req, res) {
-        res.render("index", { title: "UK Company Search", BasicAuthHeader : process.env.CH_BASIC_AUTH });
+        res.render("govukindex", { title: "UK Company Search", BasicAuthHeader : process.env.CH_BASIC_AUTH });
     });
 
   };

@@ -205,6 +205,9 @@
 				status: statusVal,
 				hasStatus: ko.computed(function(){
 					return statusVal().length;
+				}),
+				hasResults: ko.computed(function(){
+					return companiesObservable().length;
 				})
 			}
 		};
@@ -222,10 +225,9 @@ function CompanyViewModel(company) {
 		var inactive = (this.company.company_status !== 'active');
 		return inactive; 
     }, this);
-	
+
 	this.displaySummary = ko.computed(function() {
-        return this.company.title 
-				+ " (" + this.company.description + " - Postal Code: " + this.company.address.postal_code + ")";
+        return "Incorportated: " + this.company.date_of_creation + " - Office: " + this.company.address.locality + ", " + this.company.address.postal_code;
     }, this);
 }
 
