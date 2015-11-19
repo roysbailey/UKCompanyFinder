@@ -233,7 +233,8 @@ function CompanyViewModel(company) {
 
 // Called when jquery has loaded to wireup the click handler to our search button.
 $(function() {
-	$( "#search" ).click(function() {
+	$( "#search" ).click(function(e) {
+		e.preventDefault();
 		cvm.index.onClickBind();
 	});
 });
